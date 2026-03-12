@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinator Dashboard - ClubHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <div class="brand-logo">📋</div>
+                <div class="brand-text">
+                    <h1>ClubHub</h1>
+                    <p>Coordinator Portal</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="members">Members</a></li>
+                <li><a href="#" class="nav-link" data-page="events">Events</a></li>
+                <li><a href="#" class="nav-link" data-page="announcements">Announcements</a></li>
+                <li><a href="#" class="nav-link" data-page="requests">Join Requests</a></li>
+            </ul>
+            <div class="nav-user">
+                <div class="nav-avatar" id="user-avatar">C</div>
+                <span id="user-name">Coordinator</span>
+                <button class="logout-btn" onclick="logoutUser()">Logout</button>
+            </div>
+        </nav>
+
+        <!-- ========== DASHBOARD ========== -->
+        <div id="dashboard-page" class="page">
+            <div class="page-content">
+                <div class="dashboard-header">
+                    <h2 id="welcome-msg">Welcome, Coordinator! 📋</h2>
+                    <p id="club-subtitle">Manage your assigned clubs</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon clubs">🎯</div>
+                        <div class="stat-info">
+                            <h3 id="stat-clubs">0</h3>
+                            <p>My Clubs</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon members">👥</div>
+                        <div class="stat-info">
+                            <h3 id="stat-members">0</h3>
+                            <p>Total Members</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon events">📅</div>
+                        <div class="stat-info">
+                            <h3 id="stat-events">0</h3>
+                            <p>Events Created</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon requests">🔔</div>
+                        <div class="stat-info">
+                            <h3 id="stat-requests">0</h3>
+                            <p>Pending Requests</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h3>My Clubs</h3>
+                    <div class="clubs-grid" id="my-clubs-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MEMBERS ========== -->
+        <div id="members-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Club Members</h2>
+                </div>
+                <div class="section-card">
+                    <div class="member-list" id="members-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== EVENTS ========== -->
+        <div id="events-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Club Events</h2>
+                    <button class="btn-primary" onclick="openEventModal()">+ New Event</button>
+                </div>
+                <div id="events-list">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== ANNOUNCEMENTS ========== -->
+        <div id="announcements-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Announcements</h2>
+                    <button class="btn-primary" onclick="openAnnouncementModal()">+ New Announcement</button>
+                </div>
+                <div id="announcements-list">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== JOIN REQUESTS ========== -->
+        <div id="requests-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Join Requests</h2>
+                </div>
+                <div class="section-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Email</th>
+                                <th>Club</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requests-tbody">
+                        </tbody>
+                    </table>
+                    <div id="requests-empty" class="empty-state hidden">
+                        <div class="empty-icon">✅</div>
+                        <h4>No pending requests</h4>
+                        <p>All caught up!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Event Modal -->
+    <div id="event-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h3 id="event-modal-title">Create New Event</h3>
+            <form id="event-form">
+                <div class="form-group">
+                    <label>Club</label>
+                    <select id="event-club" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Event Title</label>
+                    <input type="text" id="event-title" placeholder="e.g. Web Dev Workshop" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="event-desc" placeholder="Brief description of the event"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="event-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Time</label>
+                        <input type="text" id="event-time" placeholder="e.g. 3:00 PM - 5:00 PM">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Venue</label>
+                    <input type="text" id="event-venue" placeholder="e.g. Computer Lab A">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeEventModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Announcement Modal -->
+    <div id="announcement-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h3>Post Announcement</h3>
+            <form id="announcement-form">
+                <div class="form-group">
+                    <label>Club</label>
+                    <select id="ann-club" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="ann-title" placeholder="Announcement title" required>
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="ann-content" placeholder="Write your announcement here..." required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeAnnouncementModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Post Announcement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Database -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/coordinator.js"></script>
+</body>
+
+</html>

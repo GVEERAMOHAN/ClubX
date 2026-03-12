@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ClubHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <div class="brand-logo">⚙️</div>
+                <div class="brand-text">
+                    <h1>ClubHub</h1>
+                    <p>Admin Panel</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="clubs">Clubs</a></li>
+                <li><a href="#" class="nav-link" data-page="events">Events</a></li>
+                <li><a href="#" class="nav-link" data-page="announcements">Announcements</a></li>
+                <li><a href="#" class="nav-link" data-page="users">Users</a></li>
+            </ul>
+            <div class="nav-user">
+                <div class="nav-avatar" id="user-avatar">A</div>
+                <span id="user-name">Admin</span>
+                <button class="logout-btn" onclick="logoutUser()">Logout</button>
+            </div>
+        </nav>
+
+        <!-- ========== DASHBOARD ========== -->
+        <div id="dashboard-page" class="page">
+            <div class="page-content">
+                <div class="dashboard-header">
+                    <h2 id="welcome-msg">Welcome, Admin! ⚙️</h2>
+                    <p>Full control over the system</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon clubs">🎯</div>
+                        <div class="stat-info">
+                            <h3 id="stat-clubs">0</h3>
+                            <p>Total Clubs</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon members">👥</div>
+                        <div class="stat-info">
+                            <h3 id="stat-users">0</h3>
+                            <p>Total Users</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon events">📅</div>
+                        <div class="stat-info">
+                            <h3 id="stat-events">0</h3>
+                            <p>Total Events</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon announcements">📢</div>
+                        <div class="stat-info">
+                            <h3 id="stat-announcements">0</h3>
+                            <p>Announcements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MANAGE CLUBS ========== -->
+        <div id="clubs-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Manage Clubs</h2>
+                    <button class="btn-primary" onclick="openClubModal()">+ Create Club</button>
+                </div>
+                <div class="section-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Club Name</th>
+                                <th>Description</th>
+                                <th>Coordinator</th>
+                                <th>Members</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clubs-tbody"></tbody>
+                    </table>
+                    <div id="clubs-empty" class="empty-state hidden">
+                        <div class="empty-icon">🎯</div>
+                        <h4>No clubs created yet</h4>
+                        <p>Create your first club!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MANAGE EVENTS ========== -->
+        <div id="events-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Manage Events</h2>
+                    <button class="btn-primary" onclick="openEventModal()">+ Create Event</button>
+                </div>
+                <div class="section-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Event Title</th>
+                                <th>Club</th>
+                                <th>Date</th>
+                                <th>Venue</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="events-tbody"></tbody>
+                    </table>
+                    <div id="events-empty" class="empty-state hidden">
+                        <div class="empty-icon">📅</div>
+                        <h4>No events yet</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MANAGE ANNOUNCEMENTS ========== -->
+        <div id="announcements-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Manage Announcements</h2>
+                    <button class="btn-primary" onclick="openAnnouncementModal()">+ Post Announcement</button>
+                </div>
+                <div id="announcements-list">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MANAGE USERS ========== -->
+        <div id="users-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Manage Users</h2>
+                </div>
+                <div class="section-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Club Modal -->
+    <div id="club-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h3 id="club-modal-title">Create New Club</h3>
+            <form id="club-form">
+                <div class="form-group">
+                    <label>Club Name</label>
+                    <input type="text" id="club-name" placeholder="e.g. Coding Club" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="club-desc" placeholder="Brief description of the club"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>About (Detailed)</label>
+                    <textarea id="club-about" placeholder="Detailed info about the club"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Icon (Emoji)</label>
+                        <input type="text" id="club-icon" placeholder="🎯" value="🎯">
+                    </div>
+                    <div class="form-group">
+                        <label>Assign Coordinator</label>
+                        <select id="club-coordinator">
+                            <option value="">None</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeClubModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Club</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Event Modal -->
+    <div id="event-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h3 id="event-modal-title">Create New Event</h3>
+            <form id="event-form">
+                <div class="form-group">
+                    <label>Club</label>
+                    <select id="event-club" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Event Title</label>
+                    <input type="text" id="event-title" placeholder="e.g. Web Dev Workshop" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="event-desc" placeholder="Brief description"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="event-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Time</label>
+                        <input type="text" id="event-time" placeholder="3:00 PM - 5:00 PM">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Venue</label>
+                    <input type="text" id="event-venue" placeholder="Computer Lab A">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeEventModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Announcement Modal -->
+    <div id="announcement-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h3>Post Announcement</h3>
+            <form id="announcement-form">
+                <div class="form-group">
+                    <label>Club</label>
+                    <select id="ann-club" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="ann-title" placeholder="Announcement title" required>
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="ann-content" placeholder="Write your announcement..." required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeAnnouncementModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Role Change Modal -->
+    <div id="role-modal" class="modal-overlay hidden">
+        <div class="modal">
+            <h3>Change User Role</h3>
+            <form id="role-form">
+                <div class="form-group">
+                    <label>User</label>
+                    <input type="text" id="role-user-name" disabled>
+                </div>
+                <div class="form-group">
+                    <label>New Role</label>
+                    <select id="role-select" required>
+                        <option value="student">Student</option>
+                        <option value="coordinator">Coordinator</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeRoleModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Update Role</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Database -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

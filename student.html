@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - ClubHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <div class="brand-logo">🎓</div>
+                <div class="brand-text">
+                    <h1>ClubHub</h1>
+                    <p>Student Portal</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="clubs">Browse Clubs</a></li>
+                <li><a href="#" class="nav-link" data-page="events">Events</a></li>
+                <li><a href="#" class="nav-link" data-page="announcements">Announcements</a></li>
+            </ul>
+            <div class="nav-user">
+                <div class="nav-avatar" id="user-avatar">S</div>
+                <span id="user-name">Student</span>
+                <button class="logout-btn" onclick="logoutUser()">Logout</button>
+            </div>
+        </nav>
+
+        <!-- ========== DASHBOARD ========== -->
+        <div id="dashboard-page" class="page">
+            <div class="page-content">
+                <div class="dashboard-header">
+                    <h2 id="welcome-msg">Welcome, Student! 👋</h2>
+                    <p>Here's what's happening with your clubs</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon clubs">🎯</div>
+                        <div class="stat-info">
+                            <h3 id="stat-clubs">0</h3>
+                            <p>Joined Clubs</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon events">📅</div>
+                        <div class="stat-info">
+                            <h3 id="stat-events">0</h3>
+                            <p>Upcoming Events</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon announcements">📢</div>
+                        <div class="stat-info">
+                            <h3 id="stat-announcements">0</h3>
+                            <p>Announcements</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <h3>Your Clubs</h3>
+                    <div class="clubs-grid" id="my-clubs-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BROWSE CLUBS ========== -->
+        <div id="clubs-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Explore Student Clubs</h2>
+                </div>
+                <div class="clubs-grid" id="all-clubs-list">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== CLUB DETAILS ========== -->
+        <div id="club-details-page" class="page hidden">
+            <div class="page-content">
+                <div class="club-banner">
+                    <h2 id="detail-club-name">Club Name</h2>
+                    <p id="detail-club-desc">Club Description</p>
+                </div>
+                <div class="section-card">
+                    <h3>About This Club</h3>
+                    <p id="detail-club-about"></p>
+                </div>
+                <div class="section-card">
+                    <h3 id="detail-members-title">Members</h3>
+                    <div class="member-list" id="detail-members-list"></div>
+                </div>
+                <div class="section-card">
+                    <h3>Club Events</h3>
+                    <div id="detail-events-list"></div>
+                </div>
+                <div class="section-card">
+                    <h3>Club Announcements</h3>
+                    <div id="detail-announcements-list"></div>
+                </div>
+                <button class="btn-secondary" onclick="navigateToPage('clubs')" style="margin-top:1rem;">← Back to All
+                    Clubs</button>
+            </div>
+        </div>
+
+        <!-- ========== EVENTS ========== -->
+        <div id="events-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Upcoming Events</h2>
+                </div>
+                <div id="events-list">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== ANNOUNCEMENTS ========== -->
+        <div id="announcements-page" class="page hidden">
+            <div class="page-content">
+                <div class="page-header">
+                    <h2>Latest Announcements</h2>
+                </div>
+                <div id="announcements-list">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Database -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/student.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Club Management System</title>
+  <meta name="description"
+    content="Manage college clubs, events, and announcements. Join clubs, register for events, and stay updated.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <div class="brand-logo">🎓</div>
+        <div class="brand-text">
+          <h1>ClubHub</h1>
+          <p>College Club Management</p>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+        <li><a href="#" class="nav-link" data-page="login">Login</a></li>
+        <li><a href="#" class="nav-link" data-page="register">Register</a></li>
+      </ul>
+    </nav>
+
+    <!-- ========== HOME PAGE ========== -->
+    <div id="home-page" class="page">
+      <div class="page-content">
+        <div class="hero-section">
+          <h2>Connect, Engage & Grow<br>with Student Clubs</h2>
+          <p>Join a vibrant community of students passionate about learning, leadership, and making a difference.
+            Discover clubs that match your interests.</p>
+          <button class="cta-button" onclick="navigateToPage('register')">Get Started →</button>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Discover Clubs</h3>
+            <p>Browse through a wide variety of clubs covering academics, arts, sports, technology, and social causes.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📅</div>
+            <h3>Track Events</h3>
+            <p>Stay updated with upcoming events, workshops, and meetings organized by your favorite clubs.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📢</div>
+            <h3>Get Announcements</h3>
+            <p>Never miss important updates and announcements from clubs you're a part of.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Role-Based Access</h3>
+            <p>Admin, Coordinator, and Student — each role has tailored features for smooth club management.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔔</div>
+            <h3>Join Requests</h3>
+            <p>Students can request to join clubs. Coordinators review and approve memberships.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Dashboard Analytics</h3>
+            <p>Visual dashboards with real-time stats about clubs, members, events, and more.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== LOGIN PAGE ========== -->
+    <div id="login-page" class="page hidden">
+      <div class="login-container">
+        <div class="login-card">
+          <h2>Welcome Back</h2>
+          <p class="subtitle">Login to access your dashboard</p>
+          <form id="login-form">
+            <div class="form-group">
+              <label for="login-email">Email Address</label>
+              <input type="email" id="login-email" placeholder="you@college.edu" required>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <input type="password" id="login-password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+          </form>
+
+          <!-- Quick Login Demo Accounts -->
+          <div class="demo-accounts">
+            <p class="demo-title">⚡ Quick Login (Demo Accounts)</p>
+            <div class="demo-buttons">
+              <button class="demo-btn admin" onclick="quickLogin('admin@college.edu','admin123')">
+                🔴 Admin
+              </button>
+              <button class="demo-btn coordinator" onclick="quickLogin('rahul@college.edu','coord123')">
+                🟡 Coordinator
+              </button>
+              <button class="demo-btn student" onclick="quickLogin('priya@college.edu','student123')">
+                🟢 Student
+              </button>
+            </div>
+          </div>
+
+          <div class="login-footer">
+            <p>New user? <a href="#" onclick="navigateToPage('register')">Create an account</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== REGISTER PAGE ========== -->
+    <div id="register-page" class="page hidden">
+      <div class="login-container">
+        <div class="login-card" style="max-width: 500px;">
+          <h2>Create Account</h2>
+          <p class="subtitle">Join the club community</p>
+          <form id="register-form">
+            <div class="form-group">
+              <label for="reg-name">Full Name</label>
+              <input type="text" id="reg-name" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-email">Email Address</label>
+              <input type="email" id="reg-email" placeholder="you@college.edu" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="reg-phone">Phone Number</label>
+                <input type="tel" id="reg-phone" placeholder="9876543210">
+              </div>
+              <div class="form-group">
+                <label for="reg-department">Department</label>
+                <input type="text" id="reg-department" placeholder="CSE">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="reg-year">Year</label>
+                <select id="reg-year">
+                  <option value="1">1st Year</option>
+                  <option value="2">2nd Year</option>
+                  <option value="3">3rd Year</option>
+                  <option value="4">4th Year</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="reg-password">Password</label>
+                <input type="password" id="reg-password" placeholder="Min 6 characters" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Register as</label>
+              <div class="role-selector">
+                <div class="role-option selected" data-role="student" onclick="selectRole(this)">
+                  <span class="role-icon">🎓</span>
+                  Student
+                </div>
+                <div class="role-option" data-role="coordinator" onclick="selectRole(this)">
+                  <span class="role-icon">📋</span>
+                  Coordinator
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="login-button">Create Account</button>
+          </form>
+          <div class="login-footer">
+            <p>Already have an account? <a href="#" onclick="navigateToPage('login')">Login here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Database -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // --- Navigation ---
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigateToPage(e.target.getAttribute('data-page'));
+      });
+    });
+
+    // --- Role Selector ---
+    let selectedRole = 'student';
+
+    function selectRole(el) {
+      document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedRole = el.getAttribute('data-role');
+    }
+
+    // --- Login Form ---
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      await loginUser(email, password);
+    });
+
+    // --- Quick Login ---
+    async function quickLogin(email, password) {
+      document.getElementById('login-email').value = email;
+      document.getElementById('login-password').value = password;
+      await loginUser(email, password);
+    }
+
+    // --- Register Form ---
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const phone = document.getElementById('reg-phone').value.trim();
+      const department = document.getElementById('reg-department').value.trim();
+      const year = document.getElementById('reg-year').value;
+
+      if (password.length < 6) {
+        showToast('Password must be at least 6 characters.', 'error');
+        return;
+      }
+
+      await registerUser(name, email, password, selectedRole, department, year, phone);
+    });
+  </script>
+</body>
+
+</html>
